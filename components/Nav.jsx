@@ -19,6 +19,8 @@ const Nav = () => {
     setProviders();
   }, []);
 
+  const [toggleDropdown, settoggleDropdown] = useState(false)
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex gap-2 flex-center">
@@ -81,8 +83,39 @@ const Nav = () => {
                 height={37}
                 alt="profile image"
                 className="rounded-full"
-                onClick={() => {}}
+                onClick={() => settoggleDropdown((prev) => !prev)}
               />
+
+            {toggleDropdown && (
+              <div className="dropdown">
+                <Link 
+                  href="/profile"
+                  className="dropdown_link"
+                  onClick={() => settoggleDropdown(false)}
+                >
+                  My profile
+                </Link>
+
+                <Link 
+                  href="/create-prompt"
+                  className="dropdown_link"
+                  onClick={() => settoggleDropdown(false)}
+                >
+                  Create Prompt
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    settoggleDropdown(false);
+                    signOut();
+                  }}
+                  className="mt-5 w-full black_btn"
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}                                                                                        
           </div>
         ) : (
           <>
@@ -94,7 +127,7 @@ const Nav = () => {
                   onClick={() => signIn(provider.id)}
                   className="black_btn"
                 >
-                  SignIn
+                  Sign In
                 </button>
               ))}
           </>
